@@ -1,4 +1,5 @@
 #pragma once
+#include <NEGeneral.h>
 #include "../math/fx.h"
 #include "../ui/jnLytRes.h"
 #include "../ui/cellLyt.h"
@@ -15,9 +16,13 @@ typedef struct
     jnui_bnbl_res_t* bnbl;
     jnui_bncl_res_t* bncl;
     cellLyt_element_t* lyt;
-    int state;
+    NE_Camera *Camera;
+    NE_Model *Sphere;
     int bg2Ptr; //Returned by InitBG
     int bg2PtrSub;
+    int state;
+    int frameCounter;
+    s8 sel;
 } title_state_t;
 
 

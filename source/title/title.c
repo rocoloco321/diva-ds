@@ -1,5 +1,6 @@
 #include <nds.h>
 #include <stdlib.h>
+#include <NEMain.h>
 
 #include "../archive.h"
 #include "../globalData.h"
@@ -8,13 +9,15 @@
 #include "../ui/jnLytRes.h"
 #include "../main2d.h"
 #include "../scene.h"
+
+#include "../sphere_bin.h"
 #include "title.h"
 
 static title_state_t* sTitleSceneState;
 
 static display_config_t dispConfig = 
 {
-    MODE_0_2D,
+    MODE_0_3D,
     MODE_0_2D,
     VRAM_A_MAIN_BG_0x06000000,
     VRAM_B_LCD,
@@ -27,9 +30,20 @@ static display_config_t dispConfig =
     VRAM_I_SUB_SPRITE
 };
 
+static int sTitleSceneDests[] = 
+{
+    SCENE_MENU,
+    SCENE_MULTIPLAYER,
+    SCENE_EDIT,
+    SCENE_SETTINGS,
+    SCENE_EXIT
+};
+
 
 void title_init(void)
 {
+    NE_Init3D();
+    NE_ClearColorSet(NE_Black, 0, 63);
     sTitleSceneState = malloc(sizeof(title_state_t));
     m2d_loadDisplayConfig(&dispConfig);
 
@@ -64,6 +78,26 @@ void title_init(void)
     sTitleSceneState->bncl = (jnui_bncl_res_t*)loadArchive("/scene/Title/title.bncl");
     sTitleSceneState->lyt = cellLyt_init(sTitleSceneState->bncl);
 
+    sTitleSceneState->sel = 0;
+    sTitleSceneState->state = 0;
+    sTitleSceneState->frameCounter = 0;
+    cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = false;
+    cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = false;
+    cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = false;
+    cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = false;
+    cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = false;
+    cellLyt_render(sTitleSceneState->bncl, sTitleSceneState->lyt, sTitleSceneState->objSub.obj, true);
+    m2d_applyBuffers();
+    m2d_applyBuffers();
+    NE_ModelLoadStaticMeshFAT(sTitleSceneState->Sphere, "/actor/actor_00_00.dsm");
+    sTitleSceneState->Camera = NE_CameraCreate();
+    NE_CameraSet(sTitleSceneState->Camera,
+                0, 0, -2,
+                0, 0, 0,
+                0, 1, 0);
+    NE_ModelLoadStaticMesh(sTitleSceneState->Sphere, sphere_bin);
+    NE_LightSet(0, NE_White, -0.5, -0.5, -0.5);
+
 }
 
 void title_finalize(void)
@@ -81,11 +115,156 @@ void title_finalize(void)
     sTitleSceneState = NULL;
 }
 
+void updateMenu()
+{
+    switch (sTitleSceneState->sel)
+    {
+    case 0:
+        cellLyt_getLytElement(sTitleSceneState->lyt, 0)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 3)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 5)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 7)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 9)->visible = true;
+        break;
+    case 1:
+        cellLyt_getLytElement(sTitleSceneState->lyt, 0)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 3)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 5)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 7)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 9)->visible = true;
+        break;
+    case 2:
+        cellLyt_getLytElement(sTitleSceneState->lyt, 0)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 3)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 5)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 7)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 9)->visible = true;
+        break;
+    case 3:
+        cellLyt_getLytElement(sTitleSceneState->lyt, 0)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 3)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 5)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 7)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 9)->visible = true;
+        break;
+    case 4:
+        cellLyt_getLytElement(sTitleSceneState->lyt, 0)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 1)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 2)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 3)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 4)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 5)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 6)->visible = false;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 7)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 8)->visible = true;
+        cellLyt_getLytElement(sTitleSceneState->lyt, 9)->visible = false;
+        break;
+    default:
+        break;
+    }
+}
+
+void state0_render(scene_manager_t* arg)
+{
+    scanKeys();
+    u32 keys_down = keysDown();
+    if(keys_down & KEY_UP)
+    {
+        sTitleSceneState->sel--;
+        if(sTitleSceneState->sel<0) sTitleSceneState->sel = 4;
+    }
+    if(keys_down & KEY_DOWN)
+    {
+        sTitleSceneState->sel++;
+        if(sTitleSceneState->sel>4) sTitleSceneState->sel = 0;
+    }
+    if(keys_down & KEY_TOUCH)
+    {
+        touchPosition tp;
+        touchRead(&tp);
+        int touchRes = btnLyt_checkTouch(sTitleSceneState->bnbl, tp.px, tp.py);
+        if(touchRes != -1)
+        {
+            sTitleSceneState->sel = touchRes;
+            sTitleSceneState->state = 1;
+            sTitleSceneState->frameCounter = 0;
+        }
+    }
+    if(keys_down & KEY_A)
+    {
+        sTitleSceneState->state = 1;  
+        sTitleSceneState->frameCounter = 0;
+    }
+    updateMenu();
+}
+
+void state1_render(scene_manager_t* arg)
+{
+    int elementId = sTitleSceneState->sel << 1;
+    if(mod32(sTitleSceneState->frameCounter, 3) == 0)
+    {
+        if(sTitleSceneState->frameCounter & 1)
+        {
+            cellLyt_getLytElement(sTitleSceneState->lyt, elementId)->visible = false;
+            cellLyt_getLytElement(sTitleSceneState->lyt, elementId+1)->visible = true;
+        }
+        else
+        {
+            cellLyt_getLytElement(sTitleSceneState->lyt, elementId)->visible = true;
+            cellLyt_getLytElement(sTitleSceneState->lyt, elementId+1)->visible = false;
+        }
+    }
+    if(sTitleSceneState->frameCounter == 60)
+    {
+        arg->nextScene = sTitleSceneDests[sTitleSceneState->sel];
+    }
+}
+
+void render3D()
+{
+    NE_CameraUse(sTitleSceneState->Camera);
+    NE_ModelDraw(sTitleSceneState->Sphere);
+}
+
 void title_render(scene_manager_t* arg, int frameCounter)
 {
+    sTitleSceneState->frameCounter++;
+    switch (sTitleSceneState->state)
+    {
+    case 0:
+        state0_render(arg);
+        break;
+    case 1:
+        state1_render(arg);
+        break;
+    default:
+        break;
+    }
+
     m2d_resetOam();
     cellLyt_render(sTitleSceneState->bncl, sTitleSceneState->lyt, sTitleSceneState->objSub.obj, true);
     m2d_prepareBuffers();
+    NE_Process(render3D);
 }
 
 void title_vblank(void)

@@ -5,8 +5,11 @@ typedef enum
     SCENE_LOGO = 0,
     SCENE_TITLE,
     SCENE_MENU,
-    SCENE_SETTINGS,
     SCENE_PLAY,
+    SCENE_MULTIPLAYER,
+    SCENE_EDIT,
+    SCENE_SETTINGS,
+
     SCENE_EXIT,
     SCENE_INVALID = 255
 } DivaScene;

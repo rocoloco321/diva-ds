@@ -8,7 +8,8 @@
                 "/opt/blocksds/core/libs/libnds/include/**",
                 "/opt/blocksds/external/nflib/include/**",
                 "/opt/blocksds/external/nitro-engine/include/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/var/opt/wonderful/thirdparty/blocksds/external/nitro-engine/include"
             ],
             "defines": [],
             "compilerPath": "/opt/wonderful/toolchain/gcc-arm-none-eabi/bin/arm-none-eabi-gcc",

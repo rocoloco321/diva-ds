@@ -36,17 +36,6 @@ void logo_init(void)
 
     bgShow(bg0);
     bgShow(bg0Sub);
-
-    
-
-/*
-
-    NF_LoadTiledBg("/scene/Logo/logo_m_b", "mainBG0", 256, 256);
-    NF_LoadTiledBg("/scene/Logo/logo_s_b", "subBG0", 256, 256);
-
-    NF_CreateTiledBg(0, 0, "mainBG0");
-    NF_CreateTiledBg(1, 0, "subBG0");
-*/
 }
 
 void logo_finalize(void)
@@ -56,10 +45,6 @@ void logo_finalize(void)
     m2d_destroyBgPal(&sLogoState->bgPal);
     m2d_destroyBgPal(&sLogoState->bgPalSub);
     free(sLogoState);
-    /*
-    NF_DeleteTiledBg(0,0);
-    NF_DeleteTiledBg(1,0);
-    */
 }
 
 void logo_render(scene_manager_t* arg, int frameCounter)

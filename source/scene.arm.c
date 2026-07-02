@@ -44,7 +44,12 @@ static scene_manager_t sSceneManager =
 static const scene_main_func_t sSceneTable[] =
 {
     (scene_main_func_t)logosc_run,
-    (scene_main_func_t)titlesc_run
+    (scene_main_func_t)titlesc_run,
+    (scene_main_func_t)logosc_run,
+    (scene_main_func_t)logosc_run,
+    (scene_main_func_t)logosc_run,
+    (scene_main_func_t)logosc_run,
+    (scene_main_func_t)logosc_run
 };
 
 int fadeFrame = 0;
