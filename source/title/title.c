@@ -89,12 +89,13 @@ void title_init(void)
     cellLyt_render(sTitleSceneState->bncl, sTitleSceneState->lyt, sTitleSceneState->objSub.obj, true);
     m2d_applyBuffers();
     m2d_applyBuffers();
-    NE_ModelLoadStaticMeshFAT(sTitleSceneState->Sphere, "/actor/actor_00_00.dsm");
     sTitleSceneState->Camera = NE_CameraCreate();
     NE_CameraSet(sTitleSceneState->Camera,
-                0, 0, -2,
-                0, 0, 0,
-                0, 1, 0);
+        0, 0, -2,
+        0, 0, 0,
+        0, 1, 0);
+    sTitleSceneState->Sphere = NE_ModelCreate(NE_Static);
+    //NE_ModelLoadStaticMeshFAT(sTitleSceneState->Sphere, "/actor/actor_00_00.dsm");
     NE_ModelLoadStaticMesh(sTitleSceneState->Sphere, sphere_bin);
     NE_LightSet(0, NE_White, -0.5, -0.5, -0.5);
 
