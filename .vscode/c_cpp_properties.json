@@ -3,20 +3,20 @@
         {
             "name": "Wonderful (gcc-arm-none-eabi)",
             "includePath": [
-                "/opt/wonderful/toolchain/gcc-arm-none-eabi/arm-none-eabi/include/**",
-                "/opt/wonderful/toolchain/gcc-arm-none-eabi/arm-none-eabi/include/c++/**",
-                "/opt/blocksds/core/libs/libnds/include/**",
-                "/opt/blocksds/external/nflib/include/**",
-                "/opt/blocksds/external/nitro-engine/include/**",
-                "${workspaceFolder}/**",
-                "/var/opt/wonderful/thirdparty/blocksds/external/nitro-engine/include"
+                "C:\\Users\\Roco\\Documents\\WineStuff\\TwlSDK\\include\\**",
+                "C:\\Users\\Roco\\Documents\\WineStuff\\TwlSystem\\include\\**",
+                "C:\\Users\\Roco\\Documents\\WineStuff\\CW for NINTENDO DSi V1.6 SP2\\ARM_EABI_Support_DS2.0\\msl\\MSL_C\\MSL_Common\\Include\\**",
+                "${workspaceFolder}/**"
             ],
-            "defines": [],
+            "defines": [
+                "SDK_TWL = 1"
+            ],
             "compilerPath": "/opt/wonderful/toolchain/gcc-arm-none-eabi/bin/arm-none-eabi-gcc",
             "intelliSenseMode": "gcc-arm",
             "compileCommands": [
                 "${workspaceFolder}/compile_commands.json"
-            ]
+            ],
+            "cStandard": "c99"
         }
     ],
     "version": 4

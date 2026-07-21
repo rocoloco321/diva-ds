@@ -1,3 +1,7 @@
+# Disclaimer
+This is now a TWL SDK project, truly sorry but the current open source libs doesn't have the features I need to achieve
+my vision. The source code will remain public as a compromise but please don't ask me how to build this
+
 # dds - a stepmania / ddr clone for the nintendo ds
 this project aims to recreate a game experience with **minimal compromises** such as not requiring a specific sound file format or specific image dimentions, every song should work drag and drop just like the other games that support them, the only limitations being video backgrounds or lua scripts.
 

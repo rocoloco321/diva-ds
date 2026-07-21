@@ -1,0 +1,37 @@
+#NLF --- NitroROM List File
+T,"C:/Users/Roco/Documents/GitHub/diva-ds"
+V,1.1
+H,"./build/main_header.sbin","./build/main_files.sbin",22
+9,"./build/main.nef","./build/main.sbin","*","./build/main_defs.sbin","*"
+7,"C:/Users/Roco/Documents/WineStuff/TwlSDK/components/mongoose/ARM7-TS/Rom/mongoose_sub.nef","C:/Users/Roco/Documents/WineStuff/TwlSDK/components/mongoose/ARM7-TS/Rom/mongoose_sub.sbin","*","C:/Users/Roco/Documents/WineStuff/TwlSDK/components/mongoose/ARM7-TS/Rom/mongoose_sub_defs.sbin","*"
+
+# File Images
+F,00000000,00004000,ff,ffff,ffff,"build/main_header.sbin","*",6a5fab90,512,1
+F,00004000,00015ce0,ff,ffff,0008,"build/main.sbin","*",6a5fab90,512,1
+F,00015e00,0003c288,ff,ffff,000c,"C:/Users/Roco/Documents/WineStuff/TwlSDK/components/mongoose/ARM7-TS/Rom/mongoose_sub.sbin","*",4c3ecbc0,512,1
+F,0003c400,0003c59d,ff,ffff,0010,"build/main_files.sbin","*",6a5fab90,512,1
+F,0003c600,0003c6b0,ff,ffff,0012,"*FILEALLOC","*",00000000,512,1
+F,0003c800,0003d040,ff,ffff,001a,"banner.bnr","*",6a5b83e5,512,1
+F,0003d200,0003f0dc,ff,0000,ffff,"files/data/LC_Font_s.NFTR","/data/LC_Font_s.NFTR",69a3f0bc,512,0
+F,0003f200,000518d8,ff,0001,ffff,"files/data/actor/actor_00_00.dsm","/data/actor/actor_00_00.dsm",6a5b73c6,512,0
+F,00051a00,00053a30,ff,0002,ffff,"files/data/scene/Logo/logo_m_b.ncgr","/data/scene/Logo/logo_m_b.ncgr",6a5c3017,512,0
+F,00053c00,00053e28,ff,0003,ffff,"files/data/scene/Logo/logo_m_b.nclr","/data/scene/Logo/logo_m_b.nclr",6a5c3021,512,0
+F,00054000,00054824,ff,0004,ffff,"files/data/scene/Logo/logo_m_b.nscr","/data/scene/Logo/logo_m_b.nscr",6a5c300c,512,0
+F,00054a00,00059a30,ff,0005,ffff,"files/data/scene/Logo/logo_s_b.ncgr","/data/scene/Logo/logo_s_b.ncgr",6a5c33c0,512,0
+F,00059c00,00059e28,ff,0006,ffff,"files/data/scene/Logo/logo_s_b.nclr","/data/scene/Logo/logo_s_b.nclr",6a5c33be,512,0
+F,0005a000,0005a824,ff,0007,ffff,"files/data/scene/Logo/logo_s_b.nscr","/data/scene/Logo/logo_s_b.nscr",6a5c33c2,512,0
+F,0005aa00,0005aa14,ff,0008,ffff,"files/data/scene/Title/title.bnbl","/data/scene/Title/title.bnbl",6a5fab1b,512,0
+F,0005ac00,0005ac28,ff,0009,ffff,"files/data/scene/Title/title.bncl","/data/scene/Title/title.bncl",6a5fab1a,512,0
+F,0005ae00,0005ba30,ff,000a,ffff,"files/data/scene/Title/title2_m_b.ncgr","/data/scene/Title/title2_m_b.ncgr",6a5c5893,512,0
+F,0005bc00,0005c424,ff,000b,ffff,"files/data/scene/Title/title2_m_b.nscr","/data/scene/Title/title2_m_b.nscr",6a5c5889,512,0
+F,0005c600,0005ce24,ff,000c,ffff,"files/data/scene/Title/title2_s_b.nscr","/data/scene/Title/title2_s_b.nscr",6a5c616d,512,0
+F,0005d000,0005e430,ff,000d,ffff,"files/data/scene/Title/title3_m_b.ncgr","/data/scene/Title/title3_m_b.ncgr",6a5c5735,512,0
+F,0005e600,0005ec24,ff,000e,ffff,"files/data/scene/Title/title3_m_b.nscr","/data/scene/Title/title3_m_b.nscr",6a5c5725,512,0
+F,0005ee00,0005f624,ff,000f,ffff,"files/data/scene/Title/title3_s_b.nscr","/data/scene/Title/title3_s_b.nscr",6a5c6166,512,0
+F,0005f800,0005fa28,ff,0010,ffff,"files/data/scene/Title/title_m_b.nclr","/data/scene/Title/title_m_b.nclr",6a5c589f,512,0
+F,0005fc00,0005fcfc,ff,0011,ffff,"files/data/scene/Title/title_s.ncer","/data/scene/Title/title_s.ncer",6a5f93ce,512,0
+F,0005fe00,00060a30,ff,0012,ffff,"files/data/scene/Title/title_s_b.ncgr","/data/scene/Title/title_s_b.ncgr",6a5c615b,512,0
+F,00060c00,00060e28,ff,0013,ffff,"files/data/scene/Title/title_s_b.nclr","/data/scene/Title/title_s_b.nclr",6a5c6147,512,0
+F,00061000,00061830,ff,0014,ffff,"files/data/scene/Title/title_s_o.ncgr","/data/scene/Title/title_s_o.ncgr",6a5f869f,512,0
+F,00061a00,00061c28,ff,0015,ffff,"files/data/scene/Title/title_s_o.nclr","/data/scene/Title/title_s_o.nclr",6a5f869f,512,0
+#

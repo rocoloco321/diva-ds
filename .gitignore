@@ -4,3 +4,8 @@
 /build
 *.nds
 Makefile-old
+CopyToMainStorage.bat
+build.bat
+clean.bat
+NitroBuilder.exe
+rebuild.bat
