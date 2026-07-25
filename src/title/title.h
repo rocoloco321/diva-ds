@@ -1,6 +1,7 @@
 #pragma once
 #include "jnlib.h"
 #include "main2d.h"
+#include "model.h"
 #include "oam.h"
 typedef struct
 {
@@ -14,9 +15,9 @@ typedef struct
     jnui_layout_element_t* layoutElements;
     jnui_bnbl_res_t* bnbl;
     jnui_bncl_res_t* bncl;
+    model_t model;
     oam_buf_t mainOam;
     oam_buf_t subOam;
-    //cellLyt_element_t* lyt;
     int state;
     u32 frameCounter;
     u32 bgOff;

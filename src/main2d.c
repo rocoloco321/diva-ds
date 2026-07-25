@@ -7,14 +7,26 @@
 
 NNSG2dFont FontArray[FONT_COUNT];
 
-BOOL is3dEnabled;
+BOOL is3dEnabled = false;
 int bg2Mode;
 int bg2ModeSub;
 int bg3Mode;
 int bg3ModeSub;
 
+void m2d_handleStartOfFrame()
+{
+    if(is3dEnabled)
+    {
+        G3X_Reset();
+        G3X_ResetMtxStack();
+    }
+}
+
 void m2d_loadDisplayConfig(display_config_t* config)
 {
+    GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+	MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+	GX_DisableBankForLCDC();
     MI_CpuFillFast((s32*)0x7000000, 192, 0x400u);
     MI_CpuFillFast((s32*)0x7000400, 192, 0x400u);
     MI_CpuClearFast((s32*)0x5000000, 0x400u);
@@ -115,6 +127,7 @@ void m2d_loadDisplayConfig(display_config_t* config)
 
     if (config->mainBg03d == TRUE)
     {
+        NOCASH_Printf("Display Config 3d is enabled\n");
         G3X_Init();
         G3X_InitTable();
         G3X_InitMtxStack();
@@ -126,11 +139,13 @@ void m2d_loadDisplayConfig(display_config_t* config)
         G3_SwapBuffers(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
         G3X_SetClearColor(
             0x7FFF,
-            31,
+            0,
             0x7FFF, 63, 0);
     }
     is3dEnabled = config->mainBg03d;
     GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+    NNS_GfdResetLnkTexVramState();
+	NNS_GfdResetLnkPlttVramState();
 }
 
 void m2d_setBg0Config(BOOL sub, int priority, BOOL mosaic, GXBGScrSizeText screenSize,

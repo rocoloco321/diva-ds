@@ -59,6 +59,7 @@ typedef struct
 
 //extern m2d_fonts_t gFonts;
 
+void m2d_handleStartOfFrame();
 void m2d_loadDisplayConfig(display_config_t* config);
 void m2d_setBg0Config(BOOL sub, int priority, BOOL mosaic, GXBGScrSizeText screenSize,
                      GXBGColorMode colorMode, GXBGScrBase screenBase, GXBGCharBase charBase, GXBGExtPltt extPlttSlot);

@@ -7,6 +7,8 @@
 #include "input.h"
 #include "jnlib/ui/jnLyt.h"
 #include "main2d.h"
+#include "main3d.h"
+#include "model.h"
 #include "oam.h"
 #include "scene.h"
 #include "print.h"
@@ -14,19 +16,22 @@
 #include "title.h"
 
 static title_state_t* sTitleSceneState;
+static NNSG3dGeBuffer* sG3dGeBuffer;
+//model_t model;
+
 
 static display_config_t dispConfig = 
 {
     GX_DISPMODE_GRAPHICS,
     GX_BGMODE_0,
-    TRUE,
+    GX_BG0_AS_3D,
     GX_BGMODE_0,
     GX_VRAM_BG_128_A,
     GX_VRAM_OBJ_NONE,
     GX_VRAM_BGEXTPLTT_NONE,
     GX_VRAM_OBJEXTPLTT_NONE,
-    GX_VRAM_TEX_NONE,
-    GX_VRAM_TEXPLTT_NONE,
+    GX_VRAM_TEX_01_CD,
+    GX_VRAM_TEXPLTT_0123_E,
     GX_VRAM_CLEARIMAGE_NONE,
     GX_VRAM_SUB_BG_32_H,
     GX_VRAM_SUB_OBJ_16_I,
@@ -38,17 +43,18 @@ static display_config_t dispConfig =
 
 static int sTitleSceneDests[] = 
 {
-    SCENE_MENU,
-    SCENE_SETTINGS,
+    SCENE_TITLE,
+    SCENE_LOGO,
     SCENE_EXIT
 };
-
 
 void title_init(void)
 {
     sTitleSceneState = proc_alloc(sizeof(title_state_t));
     //Setup display config
+    m3d_initG3d();
     m2d_loadDisplayConfig(&dispConfig);
+    //m2d_setBg0Config(false,1, 0, 0, 1, 0, 0, 0);
     m2d_setBg3Config(false, 3, FALSE, GX_BG_SCRSIZE_TEXT_256x256, GX_BG_COLORMODE_16, GX_BG_SCRBASE_0x1800,
                         GX_BG_CHARBASE_0x00000);
     m2d_setBg2Config(false, 1, FALSE, GX_BG_SCRSIZE_TEXT_256x256, GX_BG_COLORMODE_16, GX_BG_SCRBASE_0x2000,
@@ -100,10 +106,16 @@ void title_init(void)
     sTitleSceneState->frameCounter = 0;
     sTitleSceneState->bgOff = 0;
     
-    GX_SetVisiblePlane(GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3);
+    GX_SetVisiblePlane(GX_PLANEMASK_BG0 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3);
     GXS_SetVisiblePlane(GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ);
-    m2d_setBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 8,8);
+    m2d_setBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3, 8,8);
     m2d_setBlendAlphaSub(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 8,8);
+
+    m3d_initResManagement();
+    void* nsbmd = loadFileFast("data/actor/actor_00_01.nsbmd");
+    void* nsbtx = loadFileFast("data/actor/actor_00_01.nsbtx");
+   // DC_StoreRange(nsbmd, ((NNSG3dResFileHeader*)nsbmd)->fileSize);
+    model_initFromNsbmdNsbtx(&sTitleSceneState->model, nsbmd, nsbtx);
 }
 
 void title_finalize(void)
@@ -183,8 +195,8 @@ static void state1_render(scene_manager_t* arg)
 
 static void render3D()
 {
-    //NE_CameraUse(sTitleSceneState->Camera);
-    //NE_ModelDraw(sTitleSceneState->Sphere);
+    //model_render(&sTitleSceneState->model);
+    NNS_G3dDraw(&sTitleSceneState->model.renderObj);
 }
 
 void title_render(scene_manager_t* arg, int frameCounter)
@@ -210,7 +222,9 @@ void title_render(scene_manager_t* arg, int frameCounter)
         sTitleSceneState->layoutElements);
     //renderCell(&sTitleSceneState->subOam, NNS_G2dGetCellDataByIdx(sTitleSceneState->objSub.cellbnk, 0), 128 << 12, 128 <<12);
     oam_prepareBuffers(&sTitleSceneState->mainOam, &sTitleSceneState->subOam);
-    //NE_Process(render3D);
+    m3d_render();
+    render3D();
+    m3d_finishRender();
 }
 
 void title_vblank(void)

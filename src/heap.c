@@ -11,9 +11,6 @@
 NNSFndHeapHandle gMainHeap;
 NNSFndHeapHandle gSceneHeap = NULL;
 
-static u32 mSzWork;
-static void* mPMgrWork;
-
 void heap_preInit()
 {
     void* sysHeapMemory = OS_AllocFromMainArenaLo(SYSTEM_HEAP_SIZE, 16);
@@ -27,12 +24,13 @@ void heap_preInit()
 void initHeap()
 {
 	// Setup 2 vram blocks for textures.
-	mSzWork = NNS_GfdGetLnkTexVramManagerWorkSize(4096);
-	mPMgrWork = NNS_FndAllocFromExpHeapEx(gMainHeap, mSzWork, 16);
-	NNS_GfdInitLnkTexVramManager(2 * 0x20000, 128 * 1024, mPMgrWork, mSzWork, TRUE);
-	u32 szWork = NNS_GfdGetLnkPlttVramManagerWorkSize(4096);
-	void* pMgrWork = NNS_FndAllocFromExpHeapEx(gMainHeap, szWork, 16);
-	NNS_GfdInitLnkPlttVramManager(64 * 1024, pMgrWork, szWork, TRUE);    
+	u32 mSzWork = NNS_GfdGetLnkTexVramManagerWorkSize(32);
+	u32 szWork = NNS_GfdGetLnkPlttVramManagerWorkSize(32);
+
+	void* mPMgrWork = heap_alloc(gMainHeap, mSzWork);
+	void* pMgrWork = heap_alloc(gMainHeap, szWork);
+	NNS_GfdInitLnkTexVramManager(0x40000, 0x20000, mPMgrWork, mSzWork, TRUE);
+	NNS_GfdInitLnkPlttVramManager(0x10000, pMgrWork, szWork, TRUE);    
 }
 
 NNSFndHeapHandle heap_create(void* address, u32 size)

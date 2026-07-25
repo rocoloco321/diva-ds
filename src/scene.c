@@ -1,9 +1,10 @@
 #include "common.h"
 
-#include "heap.h"
-#include "input.h"
 #include "logo/logoScene.h"
 #include "title/titleScene.h"
+#include "heap.h"
+#include "input.h"
+#include "main2d.h"
 #include "print.h"
 #include "scene.h"
 /*
@@ -102,10 +103,15 @@ void scene_runScene(const scene_def_t* sceneDef)
 {
     gSceneHeap = heap_createSubExpHeap(getMainHeap());
     u32 frameCounter = 0;
-    sceneDef->initFunc(&sSceneManager);
+    //NNS_GfdInitVramTransferManager(heap_alloc(getSceneHeap(), 2048), 128);
+    if (sceneDef->initFunc)
+    {
+        sceneDef->initFunc(&sSceneManager);
+    }
     setFadeLenght(sceneDef->fadeInLength, sceneDef->fadeInWhite);
     do
     {
+        m2d_handleStartOfFrame();
         updateFadeIn();
         input_update();
         sceneDef->updateFunc(&sSceneManager, frameCounter);
@@ -115,6 +121,7 @@ void scene_runScene(const scene_def_t* sceneDef)
     while(fadeFrame <= fadeLenght);
     do
     {
+        m2d_handleStartOfFrame();
         frameCounter++;
         input_update();
         sceneDef->updateFunc(&sSceneManager, frameCounter);
@@ -125,6 +132,7 @@ void scene_runScene(const scene_def_t* sceneDef)
     setFadeLenght(sceneDef->fadeOutLength, sceneDef->fadeOutWhite);
     do
     {
+        m2d_handleStartOfFrame();
         frameCounter++;
         input_update();
         sceneDef->updateFunc(&sSceneManager, frameCounter);
