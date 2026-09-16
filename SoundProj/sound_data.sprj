@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<NitroSoundMakerProject version="1.0.0">
+  <head>
+    <create user="hecto" host="DESKTOP-O2T8OJQ" date="2026-09-15T23:10:58" />
+    <title>NITRO-SoundMaker Project</title>
+    <generator name="cc" version="1.2.0.0" />
+  </head>
+  <body>
+    <SoundArchiveFiles>
+      <File name="sound_data" path="sound_data.sarc" />
+    </SoundArchiveFiles>
+  </body>
+</NitroSoundMakerProject>
