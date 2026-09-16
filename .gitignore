@@ -9,3 +9,13 @@ build.bat
 clean.bat
 NitroBuilder.exe
 rebuild.bat
+*.sbnk
+*.spdl
+*.sseq
+*.ssar
+*.ssdl
+*.sadl
+*.sbdl
+SoundProj/sound_data.sdat
+*.swar
+*.smap
