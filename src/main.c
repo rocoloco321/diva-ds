@@ -10,6 +10,7 @@
 #include "print.h"
 #include "saveData.h"
 #include "scene.h"
+#include "sound.h"
 #include "main.h"
 
 #define	DEFAULT_DMA_NUMBER		MI_DMA_MAX_NUM
@@ -62,7 +63,7 @@ static void initSDK()
 	MI_CpuFillFast((void *)HW_DB_OAM, 192, HW_DB_OAM_SIZE);     // clear OAM
 	MI_CpuClearFast((void *)HW_DB_PLTT, HW_DB_PLTT_SIZE);       // clear the standard palette
 
-	SND_Init();
+	sound_init();
 	//NNS_G3dInit();
 	m3d_initG3d();
 	m3d_initResManagement();

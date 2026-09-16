@@ -1,69 +1,44 @@
-;===================================================================
+;==================================================================
+; File: sound_data.sarc
 ;
-;  NITRO-Composer sample
-;
-;===================================================================
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; Wave Archive
-
-@WAVEARC
- @PATH "swar"
-WAVE_SE 	: AUTO, "se.swls"
-WAVE_BGM	: AUTO, "bgm.swls"
-	
-;;;;;;;;;;;;;;;;;;;;;;
-;; Bank
-
-@BANK
- @PATH "bnk" 
-BANK_SE     : TEXT, "se.bnk",   WAVE_SE
-BANK_BGM	: TEXT, "bgm.bnk",	WAVE_BGM
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; Player
+; Generator: cc Version 1.2.0.0
+; User: hecto
+; Host: DESKTOP-O2T8OJQ
+; Date: 2026-09-16T00:52:56
+;==================================================================
 
 @PLAYER
- PLAYER_BGM      : 1, 8000
- PLAYER_SE  = 10 : 1
- PLAYER_VOICE    : 1
- 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Sequence
+PLAYER_BGM	= 0	: 1, 8000
+PLAYER_SE	= 10	: 1
+PLAYER_VOICE	= 11	: 1
 
-@SEQ
- @PATH "mid"
-SEQ_MARIOKART : SMF, "kart64_title.mid",	BANK_BGM, 127, 64, 64, PLAYER_BGM
+@WAVEARC
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Sequence Archive
+ @PATH "swar"
+WAVE_SE	: AUTO, "se.swls"
+
+@BANK
+
+ @PATH "bnk"
+BANK_SE	: TEXT, "se.bnk", WAVE_SE
 
 @SEQARC
- @PATH "mus"
-SEQ_SE  : TEXT, "se.mus"
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Stream Player
+ @PATH "mus"
+SEQ_SE	: TEXT, "se.mus"
 
 @STRM_PLAYER
- PLAYER_STRM : STEREO, 6, 7
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; Stream
+PLAYER_STRM	= 0	: STEREO, 6, 7
 
 @STRM
- @PATH "strm"
- STRM_MARIOKART : PCM8, "kart_title.32.aiff",  127, 64, PLAYER_STRM
- STRM_FANFARE   : PCM8, "fanfare.32.aiff",     127, 64, PLAYER_STRM
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Group
+ @PATH "strm"
+STRM_MARIOKART	: PCM8, "kart_title.32.aiff", 127, 64, PLAYER_STRM
+STRM_FANFARE	: PCM8, "fanfare.32.aiff", 127, 64, PLAYER_STRM
 
 @GROUP
-
-GROUP_STATIC :
+GROUP_STATIC	: 
  SEQ_SE
  BANK_SE
- BANK_BGM
 
 

@@ -6,6 +6,7 @@
 #include "input.h"
 #include "main2d.h"
 #include "print.h"
+#include "sound.h"
 #include "scene.h"
 /*
 Simple scene manager heavily inspired by the scene manager present in Mario Kart DS, obtained via reverse engineering.
@@ -103,6 +104,7 @@ void scene_runScene(const scene_def_t* sceneDef)
 {
     gSceneHeap = heap_createSubExpHeap(getMainHeap());
     u32 frameCounter = 0;
+    sound_load(sSceneManager.currScene);
     //NNS_GfdInitVramTransferManager(heap_alloc(getSceneHeap(), 2048), 128);
     if (sceneDef->initFunc)
     {
@@ -117,6 +119,7 @@ void scene_runScene(const scene_def_t* sceneDef)
         sceneDef->updateFunc(&sSceneManager, frameCounter);
         OS_WaitVBlankIntr();
         sceneDef->vblankFunc(&sSceneManager, frameCounter);
+        sound_main();
     }
     while(fadeFrame <= fadeLenght);
     do
@@ -127,8 +130,10 @@ void scene_runScene(const scene_def_t* sceneDef)
         sceneDef->updateFunc(&sSceneManager, frameCounter);
         OS_WaitVBlankIntr();
         sceneDef->vblankFunc(&sSceneManager, frameCounter);
+        sound_main();
     }
     while(sSceneManager.nextScene == SCENE_INVALID);
+    sound_stop(sceneDef->fadeOutLength);
     setFadeLenght(sceneDef->fadeOutLength, sceneDef->fadeOutWhite);
     do
     {
@@ -139,6 +144,7 @@ void scene_runScene(const scene_def_t* sceneDef)
         updateFadeOut();
         OS_WaitVBlankIntr();
         sceneDef->vblankFunc(&sSceneManager, frameCounter);
+        sound_main();
     }
     while(fadeFrame <= fadeLenght);
     sceneDef->finalizeFunc(&sSceneManager);
